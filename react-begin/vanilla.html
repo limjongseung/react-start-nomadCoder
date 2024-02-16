@@ -12,8 +12,8 @@
     "></script>
 	<script type="text/babel">
 		const root = document.getElementById("root");
-		function App() {
-            const [amount,setAmount] = React.useState(0);
+		function MinutesToHour() {
+			const [amount, setAmount] = React.useState(0);
 			const [flipped, setFilpped] = React.useState(false);
 			const onChange = (event) => {
 				setAmount(event.target.value);
@@ -23,7 +23,7 @@
 			const onFlip = () => setFilpped((current) => !current);
 			return (
 				<div>
-					<h1>Super Converter</h1>
+					<h3>Minutes to Hour</h3>
 					<label htmlfor="minutes">Minutes</label>
 					<input
 						value={flipped ? amount * 60 : amount}
@@ -33,7 +33,6 @@
 						onChange={onChange}
 						disabled={flipped}
 					/>
-					<h4>you want to convert{amount}</h4>
 					<label htmlfor="hours">Hours</label>
 					<input
 						value={flipped ? amount : Math.round(amount / 60)}
@@ -45,6 +44,63 @@
 					/>
 					<button onClick={reset}>reset</button>
 					<button onClick={onFlip}>filp</button>
+				</div>
+			);
+		}
+		function KmToMiles() {
+			const [distance, setDistance] = React.useState("0");
+			const [filp, setFilp] = React.useState(false);
+
+			const onChange = (e) => {
+				setDistance(e.target.value);
+			};
+			const reset = () => {
+				setDistance(0);
+			};
+			const revertFilp = () => {
+				setFilp((current) => !current);
+			};
+			return (
+				<div>
+					<h3>KM 2 Miles</h3>
+					<label htmlfor="km">KM</label>
+					<input
+						id="km"
+						type="number"
+                        value={!filp ? distance : distance*1.609}
+						onChange={onChange}
+						disabled={filp}
+					/>
+					<label htmlfor="mile">mile</label>
+					<input
+						id="mile"
+						type="number"
+						value={filp ? distance : Math.ceil((distance / 1.609)*100)/100}
+						onChange={onChange}
+						disabled={!filp}
+					/>
+					<button onClick={reset}>reset</button>
+					<button onClick={revertFilp}>filp</button>
+				</div>
+			);
+		}
+		function App() {
+			const [index, setIndex] = React.useState("1");
+			const onSelect = (e) => {
+				setIndex(e.target.value);
+			};
+			return (
+				<div>
+					<h1>Super Converter</h1>
+					<select value={index} onChange={onSelect}>
+						<option value="xx">Select Conveter</option>
+						<option value="0">Minutes & Hours</option>
+						<option value="1">KM & Miles</option>
+					</select>
+					<hr />
+					{index === "xx" ? "Plz select converter" : null}
+					{index === "0" ? <MinutesToHour /> : null}
+					{index === "1" ? <KmToMiles /> : null}
 				</div>
 			);
 		}
